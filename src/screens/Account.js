@@ -3,9 +3,11 @@ import React, { useState } from 'react'
 import Input from "../components/Input"
 import Button from "../components/Button"
 import { Colors, Fonts } from '../constants'
+import { Picker } from '@react-native-picker/picker';
 const Account = () => {
     const [mail, setMail] = useState("")
     const [password, setPassword] = useState("")
+    const [selectedLanguage, setSelectedLanguage] = useState();
     // const [isLogin, setIsLogin] = useState = (false)
     const isLogin = false
 
@@ -32,6 +34,18 @@ const Account = () => {
                         </Text>}
 
             </View>
+            <View style={{ marginTop: 15 }}>
+                <Picker
+                    selectedValue={selectedLanguage}
+                    onValueChange={(itemValue, itemIndex) =>
+                        setSelectedLanguage(itemValue)
+                    }>
+                    <Picker.Item label="Türkçe" value="Tr" />
+                    <Picker.Item label="English" value="En" />
+                    <Picker.Item label="Deutschkand" value="De" />
+                </Picker>
+            </View>
+
             {
                 !isLogin ?
                     <Button
