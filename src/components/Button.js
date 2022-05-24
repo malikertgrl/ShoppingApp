@@ -3,7 +3,7 @@ import React from 'react'
 import { Colors } from '../constants'
 
 
-const Button = ({ title, backgroundColor, onPress, titleColor, borderColor, style }) => {
+const Button = ({ title, backgroundColor, onPress, titleColor, borderColor }) => {
     return (
 
         <TouchableOpacity onPress={onPress}>
@@ -24,6 +24,7 @@ const styles = StyleSheet.create({
         marginTop: 30,
         // margin: 20,
         borderRadius: 12,
+        borderWidth: 1,
     },
     text: {
         // fontSize: 14

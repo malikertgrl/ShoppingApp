@@ -1,13 +1,16 @@
 import { StyleSheet, Text, View } from 'react-native'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Input from "../components/Input"
 import Button from "../components/Button"
 import { Colors, Fonts } from '../constants'
 import { Picker } from '@react-native-picker/picker';
+import { useSelector, useDispatch } from 'react-redux'
+
 const Account = () => {
     const [mail, setMail] = useState("")
     const [password, setPassword] = useState("")
     const [selectedLanguage, setSelectedLanguage] = useState();
+    const { locale, userInfo } = useSelector(state => state.SystemReducer)
     // const [isLogin, setIsLogin] = useState = (false)
     const isLogin = false
 
@@ -34,7 +37,7 @@ const Account = () => {
                         </Text>}
 
             </View>
-            <View style={{ marginTop: 15 }}>
+            <View style={{ marginTop: 25, borderBottomWidth: 2, borderBottomColor: Colors.primaryGray }}>
                 <Picker
                     selectedValue={selectedLanguage}
                     onValueChange={(itemValue, itemIndex) =>
@@ -42,7 +45,6 @@ const Account = () => {
                     }>
                     <Picker.Item label="Türkçe" value="Tr" />
                     <Picker.Item label="English" value="En" />
-                    <Picker.Item label="Deutschkand" value="De" />
                 </Picker>
             </View>
 
@@ -53,9 +55,10 @@ const Account = () => {
                         title="Sign Up"
                         backgroundColor={mail == "" ? Colors.primaryGray : Colors.red}
                         titleColor={Colors.white}
+                        borderColor={mail == "" ? Colors.primaryGray : Colors.red}
                     />
                     :
-                    <View style={{ alignItems: "flex-end" }}>
+                    <View >
                         <Button
                             onPress={() => console.log("press")}
                             title="Log Out"

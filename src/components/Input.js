@@ -31,6 +31,7 @@ const styles = StyleSheet.create({
         marginTop: 32,
         padding: 10,
         borderBottomWidth: 1,
+        borderBottomColor: Colors.primaryGray,
     },
     onFocus: {
         height: 50,
