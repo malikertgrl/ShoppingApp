@@ -28,7 +28,7 @@ const Account = () => {
 
     }
 
-    const log_out = () => {
+    const logOutUser = () => {
         setMail("")
         setPassword("")
         dispatch(logOut())
@@ -78,7 +78,7 @@ const Account = () => {
                     :
                     <View style={{ marginTop: 200 }}>
                         <Button
-                            onPress={() => log_out()}
+                            onPress={() => logOutUser()}
                             title="Log Out"
                             backgroundColor={Colors.white}
                             borderColor={Colors.red}
