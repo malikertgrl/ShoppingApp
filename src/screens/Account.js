@@ -2,22 +2,21 @@ import { StyleSheet, Text, View } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import Input from "../components/Input"
 import Button from "../components/Button"
+import UserInfo from '../components/UserInfo'
+import Localepicker from '../components/Localepicker'
 import { Colors, Fonts } from '../constants'
-import { Picker } from '@react-native-picker/picker';
 import { useSelector, useDispatch } from 'react-redux'
 import { logIn, logOut, setLocale } from "../redux/action"
 
 const Account = () => {
     const [mail, setMail] = useState("")
     const [password, setPassword] = useState("")
-    const [selectedLanguage, setSelectedLanguage] = useState();
     const { locale, userInfo, } = useSelector(state => state.SystemReducer)
     // const [isLogin, setIsLogin] = useState = (false)
 
     const dispatch = useDispatch()
 
     const setUserInfo = () => {
-        console.log(selectedLanguage)
         const data = {
             email: mail,
             password: password,
@@ -59,32 +58,13 @@ const Account = () => {
                                 onChangeText={(text) => setPassword(text)} />
                         </View>
                         :
-                        <View>
-                            <Text>
-                                {userInfo.email}
-                            </Text>
-                            <Text>
-                                {userInfo.password}
-                            </Text>
-                            <Text>
-                                {locale}
-                            </Text>
+                        <UserInfo />
 
-                        </View>
 
                 }
 
             </View>
-            <View style={{ marginTop: 25, borderBottomWidth: 2, borderBottomColor: Colors.primaryGray }}>
-                <Picker
-                    selectedValue={locale}
-                    onValueChange={(itemValue, itemIndex) =>
-                        dispatch(setLocale(itemValue))
-                    }>
-                    <Picker.Item label="Türkçe" value="Tr" />
-                    <Picker.Item label="English" value="En" />
-                </Picker>
-            </View>
+            <Localepicker />
 
             {
                 !userInfo.email ?
@@ -96,7 +76,7 @@ const Account = () => {
                         borderColor={mail == "" ? Colors.primaryGray : Colors.red}
                     />
                     :
-                    <View style={{ marginTop: 350 }}>
+                    <View style={{ marginTop: 200 }}>
                         <Button
                             onPress={() => log_out()}
                             title="Log Out"
