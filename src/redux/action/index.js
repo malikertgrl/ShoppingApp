@@ -13,10 +13,9 @@ export const logIn = (item) => (dispatch) => {
 }
 
 //log-Out
-export const logOut = (item) => (dispatch) => {
+export const logOut = () => (dispatch) => {
     dispatch({
         type: LOG_OUT,
-        payload: item
     });
 }
 // set Locale

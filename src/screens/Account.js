@@ -5,14 +5,41 @@ import Button from "../components/Button"
 import { Colors, Fonts } from '../constants'
 import { Picker } from '@react-native-picker/picker';
 import { useSelector, useDispatch } from 'react-redux'
+import { logIn, logOut, setLocale } from "../redux/action"
 
 const Account = () => {
     const [mail, setMail] = useState("")
     const [password, setPassword] = useState("")
     const [selectedLanguage, setSelectedLanguage] = useState();
-    const { locale, userInfo } = useSelector(state => state.SystemReducer)
+    const { locale, userInfo, } = useSelector(state => state.SystemReducer)
     // const [isLogin, setIsLogin] = useState = (false)
-    const isLogin = false
+
+    const dispatch = useDispatch()
+
+    const setUserInfo = () => {
+        console.log(selectedLanguage)
+        const data = {
+            email: mail,
+            password: password,
+            locale: locale
+        }
+
+        console.log("data", data)
+        dispatch(logIn(data))
+
+    }
+
+    const log_out = () => {
+        setMail("")
+        setPassword("")
+        dispatch(logOut())
+        dispatch(setLocale("Tr"))
+
+    }
+    useEffect(() => {
+        console.log("değişti", userInfo)
+    }, [userInfo])
+
 
     return (
 
@@ -20,7 +47,7 @@ const Account = () => {
             <Text style={styles.text}>Account</Text>
             <View>
                 {
-                    !isLogin ?
+                    !userInfo.email ?
                         <View>
                             <Input
                                 placeholderText="E-mail"
@@ -32,16 +59,27 @@ const Account = () => {
                                 onChangeText={(text) => setPassword(text)} />
                         </View>
                         :
-                        <Text>
-                            userInfo
-                        </Text>}
+                        <View>
+                            <Text>
+                                {userInfo.email}
+                            </Text>
+                            <Text>
+                                {userInfo.password}
+                            </Text>
+                            <Text>
+                                {locale}
+                            </Text>
+
+                        </View>
+
+                }
 
             </View>
             <View style={{ marginTop: 25, borderBottomWidth: 2, borderBottomColor: Colors.primaryGray }}>
                 <Picker
-                    selectedValue={selectedLanguage}
+                    selectedValue={locale}
                     onValueChange={(itemValue, itemIndex) =>
-                        setSelectedLanguage(itemValue)
+                        dispatch(setLocale(itemValue))
                     }>
                     <Picker.Item label="Türkçe" value="Tr" />
                     <Picker.Item label="English" value="En" />
@@ -49,18 +87,18 @@ const Account = () => {
             </View>
 
             {
-                !isLogin ?
+                !userInfo.email ?
                     <Button
-                        onPress={() => console.log("press")}
+                        onPress={() => setUserInfo()}
                         title="Sign Up"
                         backgroundColor={mail == "" ? Colors.primaryGray : Colors.red}
                         titleColor={Colors.white}
                         borderColor={mail == "" ? Colors.primaryGray : Colors.red}
                     />
                     :
-                    <View >
+                    <View style={{ marginTop: 350 }}>
                         <Button
-                            onPress={() => console.log("press")}
+                            onPress={() => log_out()}
                             title="Log Out"
                             backgroundColor={Colors.white}
                             borderColor={Colors.red}

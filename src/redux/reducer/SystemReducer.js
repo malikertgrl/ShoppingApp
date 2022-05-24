@@ -7,7 +7,7 @@ import {
 
 const initialState = {
     locale: "Tr",
-    userInfo: {}
+    userInfo: {},
 }
 
 
