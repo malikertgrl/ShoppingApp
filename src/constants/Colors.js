@@ -3,5 +3,6 @@ export default {
     black: "#121212",
     primaryGray: "#BBC3CF",
     PrimaryTurquoise: "#0DAFC0",
-    white: "#fff"
+    white: "#fff",
+    gray: "#F1F3F5",
 }

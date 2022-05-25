@@ -1,12 +1,20 @@
-import { StyleSheet, Text, View, Image } from 'react-native'
-import React from 'react'
+import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native'
+import React, { useEffect } from 'react'
 import { Colors, Layout } from '../constants'
 import Stars from "../assets/svgs/Vectorstar.svg"
 import Location from "../assets/svgs/Vectorlocation.svg"
 import AddBasket from "../assets/svgs/VectorAdd.svg"
 
 
-const RenderItem = ({ item }) => {
+
+const RenderItem = ({ item, addBasket }) => {
+
+
+    // useEffect(() => {
+    //     console.log("basket", basket)
+    // }, [basket])
+
+
     return (
         <View style={styles.Card}>
             <View>
@@ -41,10 +49,13 @@ const RenderItem = ({ item }) => {
                         </Text>
                     </View>
                 </View>
-                <View style={[{ marginTop: 25 }, styles.flex]}>
-                    <AddBasket width={24} height={24} />
-                    <Text style={{ color: Colors.red }}>SEPETE EKLE</Text>
-                </View>
+                <TouchableOpacity onPress={addBasket}>
+                    <View style={[{ marginTop: 25, }, styles.flex]}>
+                        <AddBasket width={24} height={24} />
+                        <Text style={styles.AddBasket}>SEPETE EKLE</Text>
+                    </View>
+
+                </TouchableOpacity>
 
             </View>
 
@@ -58,7 +69,7 @@ const styles = StyleSheet.create({
     Card: {
         flexDirection: "row",
         marginVertical: 40,
-        marginHorizontal: 15
+
     },
     viewStyle: {
         marginTop: 8,
@@ -81,5 +92,6 @@ const styles = StyleSheet.create({
     }, flex: {
         flexDirection: "row",
         paddingHorizontal: 10
-    }
+    },
+    AddBasket: { color: Colors.red, paddingLeft: 10 }
 })
