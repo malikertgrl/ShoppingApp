@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native'
 import React, { useEffect } from 'react'
-import { Colors, Layout } from '../constants'
+import { Colors, Fonts, Layout } from '../constants'
+import CustomText from './CustomText'
 import Stars from "../assets/svgs/Vectorstar.svg"
 import Location from "../assets/svgs/Vectorlocation.svg"
 import AddBasket from "../assets/svgs/VectorAdd.svg"
@@ -25,42 +26,32 @@ const RenderItem = ({ item, addBasket, basket, data }) => {
 
     return (
         <View style={styles.Card}>
-            <View>
-                <Image
-                    style={{ borderRadius: 12, width: Layout.windowWidth / 5, height: Layout.windowHeight / 5 - 75 }}
-                    source={{
-                        uri: item.avatar,
-                    }}
-                />
-            </View>
+            <Image
+                style={{ borderRadius: 12, width: Layout.windowWidth / 5, height: Layout.windowHeight / 5 - 75 }}
+                source={{
+                    uri: item.avatar,
+                }}
+            />
             <View style={styles.innerCard}>
-                <Text style={styles.nameStyle}>
-                    {item.name}
-                </Text>
-                <Text style={styles.infoStyle}>
-                    {item.ProductInfo}
-                </Text>
+                <CustomText title={item.name} fontSize={Fonts.f16} fontWeight={"600"} />
+                <CustomText title={item.ProductInfo} fontSize={Fonts.f12} color={Colors.primaryGray} />
 
                 <View style={styles.viewStyle}>
                     <View style={styles.flex} >
                         <Stars width={24} height={24} />
-                        <Text>
-                            {item.star}
-                        </Text>
+                        <CustomText title={item.star} />
                     </View>
 
-                    <View style={styles.flex}>
-                        <Location width={24} height={24} />
+                    <View style={styles.flexPadding}>
+                        <Location style={{ paddingLeft: 10 }} width={24} height={24} />
 
-                        <Text>
-                            {item.distance} km
-                        </Text>
+                        <CustomText title={item.distance + " km"} />
                     </View>
                 </View>
                 <TouchableOpacity onPress={addBasket}>
                     <View style={[{ marginTop: 25, }, styles.flex]}>
                         <AddBasket width={24} height={24} />
-                        <Text style={styles.AddBasket}>SEPETE EKLE</Text>
+                        <CustomText style={styles.AddBasket} color={Colors.red} title={"SEPETE EKLE"} />
                     </View>
 
                 </TouchableOpacity>
@@ -76,7 +67,7 @@ export default RenderItem
 const styles = StyleSheet.create({
     Card: {
         flexDirection: "row",
-        marginVertical: 40,
+        marginBottom: 50,
 
     },
     viewStyle: {
@@ -85,7 +76,7 @@ const styles = StyleSheet.create({
 
 
     },
-    innerCard: { marginLeft: 10 },
+    innerCard: { marginLeft: 25 },
     nameStyle: {
         fontSize: 16,
         color: Colors.black,
@@ -99,7 +90,11 @@ const styles = StyleSheet.create({
 
     }, flex: {
         flexDirection: "row",
-        paddingHorizontal: 10
     },
-    AddBasket: { color: Colors.red, paddingLeft: 10 }
+
+    flexPadding: {
+        flexDirection: "row",
+        paddingLeft: 20
+    },
+    AddBasket: { paddingLeft: 10 }
 })

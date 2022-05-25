@@ -2,17 +2,19 @@ import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { Colors, Fonts } from '../constants'
 import { useSelector, useDispatch } from 'react-redux'
+import CustomText from "./CustomText"
 const TotalAmount = () => {
 
     const { total } = useSelector(state => state.SystemReducer)
 
     const taxes = 124
     return (
-        <View style={styles.Card}>
-            <Text style={styles.headerText}>Ürünlerin Toplamı :</Text>
-            <Text style={styles.innerText}>Toplam: {total} TL</Text>
-            <Text style={styles.innerText}>Vergiler + Kargo: {taxes} TL</Text>
-            <Text style={[{ fontSize: 18, fontWeight: '700' }, styles.innerText]}>Genel Toplam: {total + taxes} tl</Text>
+        <View >
+            <CustomText style={{ marginVertical: 20 }} title="Ürünlerin Toplamı :" fontSize={Fonts.f24} fontWeight={"700"} />
+            <CustomText style={styles.text} title={`Toplam : ${total} TL`} fontSize={Fonts.f16} fontWeight={"400"} />
+            <CustomText style={styles.text} title={`Vergiler + Kargo: ${taxes} TL`} fontSize={Fonts.f16} fontWeight={"400"} />
+            <CustomText style={styles.text} title={`Genel Toplam: ${total + taxes} TL`} fontSize={Fonts.f18} fontWeight={"700"} />
+
         </View>
     )
 }
@@ -20,19 +22,10 @@ const TotalAmount = () => {
 export default TotalAmount
 
 const styles = StyleSheet.create({
-    Card: {
 
-        margin: 24
-    },
-    headerText: {
-        fontSize: Fonts.f24,
-        color: Colors.black,
-        fontWeight: "700",
+    text: {
+
         marginVertical: 5
     },
-    innerText: {
-        color: Colors.black,
-        fontWeight: "400",
-        marginVertical: 5
-    }
+
 })

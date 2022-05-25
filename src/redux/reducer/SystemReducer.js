@@ -4,7 +4,8 @@ import {
     SET_LOCALE,
     ADD_TO_BASKET,
     REMOVE_FROM_BASKET,
-    SET_TOTAL
+    SET_TOTAL,
+    SET_LOAD
 } from "../action/actionTypes"
 
 
@@ -12,7 +13,8 @@ const initialState = {
     locale: "Tr",
     userInfo: {},
     basket: [],
-    total: 0
+    total: 0,
+    loading: false
 }
 
 
@@ -43,6 +45,11 @@ export const SystemReducer = (state = initialState, action) => {
         case SET_TOTAL:
             return {
                 ...state, total: action.payload
+            }
+
+        case SET_LOAD:
+            return {
+                ...state, loading: action.payload
             }
 
         default:

@@ -4,7 +4,8 @@ import {
     SET_LOCALE,
     ADD_TO_BASKET,
     REMOVE_FROM_BASKET,
-    SET_TOTAL
+    SET_TOTAL,
+    SET_LOAD
 } from "./actionTypes"
 
 //log-In
@@ -52,6 +53,14 @@ export const removeFromBasket = (item) => (dispatch) => {
 export const setTotal = (item) => (dispatch) => {
     dispatch({
         type: SET_TOTAL,
+        payload: item
+    })
+}
+
+
+export const setLoading = (item) => (dispatch) => {
+    dispatch({
+        type: SET_LOAD,
         payload: item
     })
 }

@@ -4,6 +4,8 @@ import Input from "../components/Input"
 import Button from "../components/Button"
 import UserInfo from '../components/UserInfo'
 import Localepicker from '../components/Localepicker'
+import CustomText from '../components/CustomText'
+import Card from '../components/Card'
 import { Colors, Fonts } from '../constants'
 import { useSelector, useDispatch } from 'react-redux'
 import { logIn, logOut, setLocale } from "../redux/action"
@@ -12,10 +14,10 @@ const Account = () => {
     const [mail, setMail] = useState("")
     const [password, setPassword] = useState("")
     const { locale, userInfo, } = useSelector(state => state.SystemReducer)
-    // const [isLogin, setIsLogin] = useState = (false)
 
     const dispatch = useDispatch()
 
+    //set user Method
     const setUserInfo = () => {
         const data = {
             email: mail,
@@ -27,7 +29,7 @@ const Account = () => {
         dispatch(logIn(data))
 
     }
-
+    //logOut method
     const logOutUser = () => {
         setMail("")
         setPassword("")
@@ -35,15 +37,12 @@ const Account = () => {
         dispatch(setLocale("Tr"))
 
     }
-    useEffect(() => {
-        console.log("değişti", userInfo)
-    }, [userInfo])
 
 
     return (
 
-        <View style={styles.Card}>
-            <Text style={styles.text}>Account</Text>
+        <Card >
+            <CustomText style={{ marginTop: 62 }} title="Account" fontSize={Fonts.f32} fontWeight={"600"} />
             <View>
                 {
                     !userInfo.email ?
@@ -58,12 +57,14 @@ const Account = () => {
                                 onChangeText={(text) => setPassword(text)} />
                         </View>
                         :
+                        // UserInfo conponent
                         <UserInfo />
 
 
                 }
 
             </View>
+            {/* picker component */}
             <Localepicker />
 
             {
@@ -88,7 +89,7 @@ const Account = () => {
 
 
             }
-        </View>
+        </Card>
     )
 }
 
@@ -101,7 +102,6 @@ const styles = StyleSheet.create({
     text: {
         marginTop: 62,
         fontSize: 32,
-        // fontFamily: "Nunito Sans",
         fontWeight: '400',
         color: Colors.black
     }

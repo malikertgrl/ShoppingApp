@@ -2,19 +2,22 @@
 import { StyleSheet, Text, View, FlatList, Image } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import api from '../api'
+import Card from '../components/Card'
 import RenderItem from '../components/RenderItem'
 import TotalAmount from '../components/TotalAmount'
+import Spinner from '../components/Spinner'
 import { Layout, Colors } from "../constants"
 import { useSelector, useDispatch } from 'react-redux'
-import { addToBasket, removeFromBasket, setTotal } from "../redux/action"
+import { addToBasket, removeFromBasket, setTotal, setLoading } from "../redux/action"
 
 const List = () => {
     const [data, setData] = useState([])
-    const { basket, total } = useSelector(state => state.SystemReducer)
+    const { basket, total, loading } = useSelector(state => state.SystemReducer)
     const dispatch = useDispatch()
 
     useEffect(() => {
         getData()
+        dispatch(setLoading(true))
     }, [])
 
 
@@ -23,24 +26,29 @@ const List = () => {
         api.allProducts().then(response => {
             if (response) {
                 setData(response)
+                dispatch(setLoading(false))
             } else {
+                dispatch(setLoading(false))
                 console.log("else error")
             }
-        }).catch(e => console.log(e))
+        }).catch(e => {
+            dispatch(setLoading(false))
+            console.log(e)
+        })
     }
 
     const addBasket = (item) => {
         console.log(item)
         dispatch(addToBasket(item))
-        const totalPriceBasket = [...basket]
 
 
 
     }
     return (
-        <View>
+        <Card>
+            {loading && <Spinner />}
             <View
-                style={[{ height: basket.length > 0 ? Layout.windowHeight / 2 + 150 : Layout.windowHeight }, styles.Card]}
+                style={[{ height: basket.length > 0 ? Layout.windowHeight / 2 + 100 : Layout.windowHeight }, styles.Card]}
             >
                 <FlatList
                     data={data}
@@ -56,7 +64,7 @@ const List = () => {
 
 
 
-        </View>
+        </Card>
     )
 }
 
@@ -66,6 +74,5 @@ const styles = StyleSheet.create({
     Card: {
         borderBottomWidth: 1,
         borderBottomColor: Colors.primaryGray,
-        marginHorizontal: 18
     }
 })
