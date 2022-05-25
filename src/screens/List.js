@@ -6,20 +6,18 @@ import RenderItem from '../components/RenderItem'
 import TotalAmount from '../components/TotalAmount'
 import { Layout, Colors } from "../constants"
 import { useSelector, useDispatch } from 'react-redux'
-import { addToBasket, removeFromBasket } from "../redux/action"
+import { addToBasket, removeFromBasket, setTotal } from "../redux/action"
 
 const List = () => {
     const [data, setData] = useState([])
-    const { basket } = useSelector(state => state.SystemReducer)
+    const { basket, total } = useSelector(state => state.SystemReducer)
     const dispatch = useDispatch()
 
     useEffect(() => {
         getData()
     }, [])
 
-    useEffect(() => {
-        console.log(basket)
-    }, [basket])
+
 
     const getData = () => {
         api.allProducts().then(response => {
@@ -34,6 +32,9 @@ const List = () => {
     const addBasket = (item) => {
         console.log(item)
         dispatch(addToBasket(item))
+        const totalPriceBasket = [...basket]
+
+
 
     }
     return (
@@ -44,7 +45,7 @@ const List = () => {
                 <FlatList
                     data={data}
                     keyExtractor={item => item.id}
-                    renderItem={({ item }) => <RenderItem item={item} addBasket={() => addBasket(item)} />
+                    renderItem={({ item }) => <RenderItem data={data} basket={basket} item={item} addBasket={() => addBasket(item)} />
 
                     }
                 />

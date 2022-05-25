@@ -3,7 +3,8 @@ import {
     LOG_OUT,
     SET_LOCALE,
     ADD_TO_BASKET,
-    REMOVE_FROM_BASKET
+    REMOVE_FROM_BASKET,
+    SET_TOTAL
 } from "./actionTypes"
 
 //log-In
@@ -43,6 +44,14 @@ export const addToBasket = (item) => (dispatch) => {
 export const removeFromBasket = (item) => (dispatch) => {
     dispatch({
         type: REMOVE_FROM_BASKET,
+        payload: item
+    })
+}
+
+
+export const setTotal = (item) => (dispatch) => {
+    dispatch({
+        type: SET_TOTAL,
         payload: item
     })
 }

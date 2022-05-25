@@ -4,13 +4,15 @@ import {
     SET_LOCALE,
     ADD_TO_BASKET,
     REMOVE_FROM_BASKET,
+    SET_TOTAL
 } from "../action/actionTypes"
 
 
 const initialState = {
     locale: "Tr",
     userInfo: {},
-    basket: []
+    basket: [],
+    total: 0
 }
 
 
@@ -38,6 +40,11 @@ export const SystemReducer = (state = initialState, action) => {
                 ...state,
                 basket: state.basket.filter(item => item != action.payload)
             }
+        case SET_TOTAL:
+            return {
+                ...state, total: action.payload
+            }
+
         default:
             return state;
     }

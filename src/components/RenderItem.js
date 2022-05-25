@@ -4,15 +4,23 @@ import { Colors, Layout } from '../constants'
 import Stars from "../assets/svgs/Vectorstar.svg"
 import Location from "../assets/svgs/Vectorlocation.svg"
 import AddBasket from "../assets/svgs/VectorAdd.svg"
+import { useSelector, useDispatch } from 'react-redux'
+import { setTotal } from '../redux/action'
 
 
 
-const RenderItem = ({ item, addBasket }) => {
+const RenderItem = ({ item, addBasket, basket, data }) => {
+    const { total } = useSelector(state => state.SystemReducer)
+
+    const dispatch = useDispatch()
 
 
-    // useEffect(() => {
-    //     console.log("basket", basket)
-    // }, [basket])
+    useEffect(() => {
+        dispatch(setTotal(basket.reduce((acc, item) => {
+            return acc + (data.find(product => product.id == item.id).price)
+        }, 0)))
+    }, [basket])
+
 
 
     return (
