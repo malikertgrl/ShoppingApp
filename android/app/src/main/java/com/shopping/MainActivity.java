@@ -1,9 +1,9 @@
 package com.shopping;
-
+import android.os.Bundle; // here
 import com.facebook.react.ReactActivity;
+import org.devio.rn.splashscreen.SplashScreen; //splash screen 
 import com.facebook.react.ReactActivityDelegate;
 import com.facebook.react.ReactRootView;
-import org.devio.rn.splashscreen.SplashScreen; //splash screen 
 
 public class MainActivity extends ReactActivity {
 
