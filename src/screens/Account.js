@@ -77,7 +77,7 @@ const Account = () => {
                         borderColor={mail == "" ? Colors.primaryGray : Colors.red}
                     />
                     :
-                    <View style={{ marginTop: 200 }}>
+                    <View style={{ marginTop: 150 }}>
                         <Button
                             onPress={() => logOutUser()}
                             title="Log Out"
