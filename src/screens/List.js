@@ -1,6 +1,6 @@
 
-import { StyleSheet, Text, View, FlatList, Image } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import { StyleSheet, Text, View, FlatList, Image, RefreshControl } from 'react-native'
+import React, { useEffect, useState, useCallback } from 'react'
 import api from '../api'
 import Card from '../components/Card'
 import RenderItem from '../components/RenderItem'
@@ -12,6 +12,7 @@ import { addToBasket, removeFromBasket, setTotal, setLoading } from "../redux/ac
 
 const List = () => {
     const [data, setData] = useState([])
+    const [refreshing, setRefreshing] = useState(false);
     const { basket, total, loading } = useSelector(state => state.SystemReducer)
     const dispatch = useDispatch()
 
@@ -21,6 +22,15 @@ const List = () => {
     }, [])
 
 
+    const wait = (timeout) => {
+        return new Promise(resolve => setTimeout(resolve, timeout));
+    }
+
+
+    const onRefresh = useCallback(() => {
+        setRefreshing(true);
+        wait(2000).then(() => setRefreshing(false));
+    }, []);
 
     const getData = () => {
         api.allProducts().then(response => {
@@ -50,11 +60,16 @@ const List = () => {
             <View
                 style={[{ height: basket.length > 0 ? Layout.windowHeight / 2 + 100 : Layout.windowHeight }, styles.Card]}
             >
+
                 <FlatList
                     data={data}
                     keyExtractor={item => item.id}
-                    renderItem={({ item }) => <RenderItem data={data} basket={basket} item={item} addBasket={() => addBasket(item)} />
-
+                    renderItem={({ item }) => <RenderItem data={data} basket={basket} item={item} addBasket={() => addBasket(item)} />}
+                    refreshControl={
+                        <RefreshControl
+                            refreshing={refreshing}
+                            onRefresh={onRefresh}
+                        />
                     }
                 />
             </View>
