@@ -22,27 +22,30 @@ const List = () => {
     }, [])
 
 
-    const wait = (timeout) => {
-        return new Promise(resolve => setTimeout(resolve, timeout));
-    }
+    // const wait = (timeout) => {
+    //     return new Promise(resolve => setTimeout(resolve, timeout));
+    // }
 
 
-    const onRefresh = useCallback(() => {
+    const onRefresh = async () => {
         setRefreshing(true);
-        wait(2000).then(() => setRefreshing(false));
-    }, []);
+        getData()
+    }
 
     const getData = () => {
         api.allProducts().then(response => {
             if (response) {
                 setData(response)
                 dispatch(setLoading(false))
+                setRefreshing(false);
             } else {
                 dispatch(setLoading(false))
                 console.log("else error")
+                setRefreshing(false);
             }
         }).catch(e => {
             dispatch(setLoading(false))
+            setRefreshing(false);
             console.log(e)
         })
     }
